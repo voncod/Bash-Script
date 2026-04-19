@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "--- Insira o nome do diretório de destino ---"
+read -r pasta
+
+if [[ ! -d "$pasta" ]]; then
+	echo "o diretório '$pasta' não existe."
+	exit 1
+fi
+
+for arquivo in *; do
+	[[ ! -f "$arquivo" ]] && continue
+
+	[[ "$arquivo" == "$(basename "$0")" ]] && continue
+	
+	exit="${arquivo##*.}"
+	if [[ "$ext" == "$arquivo" ]]; then
+		ext="sem_extensao"
+	fi
+
+	subpasta_destino="$pasta/$ext"
+	caminho_final="$subpasta_destino/$arquivo"
+
+	mkdir -p "$subpasta_destino"
+
+	if [[ -e "$caminho_final" ]]; then
+		echo "[IGNORADO] O arquivo '$arquivo' já existe em '$subpasta_destino'"
+	else
+		mv "$arquivo" "$subpasta_destino/"
+		echo "[OK] '$arquivo' movido para $subpasta_destino/"
+	fi
+done
+
+
+	
+
+	
+
+		
